@@ -1,0 +1,6 @@
+001_Data_Preprocessing
+
+This is where we start all our project from acquiring our dataset.
+Checking the Lenght, Height & Depth of our Dataset
+Provided dataset will raise many questions, which need to be cleared from Client side.
+Also we need to understand what are clients expectation & what excatly he is trying to fetch.
