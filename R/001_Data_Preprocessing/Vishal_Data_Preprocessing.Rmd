@@ -1,0 +1,89 @@
+---
+title: "Vishal_Data_Preprocessing"
+output: html_notebook
+---
+
+
+```{r}
+# Check the working DIRECTORY & set working Directory(setwd("path"))
+getwd()
+# Import Dataset
+datasets = read.csv('Data.csv')
+```
+
+```{r}
+# Check the DATASET - Width, Height & Depth(Features)
+str(datasets)
+```
+
+```{r}
+# Missing value treatment, need to be done seperate for each columns
+datasets$Age = ifelse(is.na(datasets$Age),
+                      ave(datasets$Age, FUN = function(x) mean(x, na.rm = TRUE)),
+                      datasets$Age)
+
+```
+
+```{r}
+datasets$Salary = ifelse(is.na(datasets$Salary),
+                      ave(datasets$Salary, FUN = function(x) mean(x, na.rm = TRUE)),
+                      datasets$Salary)
+
+```
+
+```{r}
+# Encoding Categorical Data - Country Column
+datasets$Country = factor(datasets$Country,
+                          levels = c('France', 'Spain', 'Germany'),
+                          labels = c(1, 2, 3))
+
+# Need to remember that FACTOR is not numeric and will give error when we FEATURE SCALE.
+# So we need to apply FEATURE SCALING only on the NUMERIC COLUMNS
+```
+
+```{r}
+# Encoding Categorical Data - Country Column
+datasets$Purchased = factor(datasets$Purchased,
+                          levels = c('No', 'Yes'),
+                          labels = c(0, 1))
+```
+
+```{r}
+# Splitting the dataset into the Training set and Test set
+library(caTools)
+
+# For consistence results we set SEED
+set.seed(123)
+
+# Split the dataset
+split = sample.split(datasets$Purchased, SplitRatio = 0.8)
+
+# Assign TRAIN & TEST Set to Variables
+training_set = subset(datasets, split == TRUE)
+test_set = subset(datasets, split == FALSE)
+
+```
+
+```{r}
+#FEATURE SCALLING
+
+# Need to remember that FACTOR is not numeric and will give error when we FEATURE SCALE.
+# So we need to apply FEATURE SCALING only on the NUMERIC COLUMNS
+
+training_set[, 2:3] = scale(training_set[, 2:3])
+test_set[, 2:3] = scale(test_set[, 2:3])
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
